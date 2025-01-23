@@ -14,6 +14,7 @@ data = load_data()
 st.title("AI Tool Finder")
 
 # Step 1: Select a Category
+data.columns = data.columns.str.strip()
 categories = data["Categories"].dropna().unique()
 selected_category = st.selectbox("Select a Category:", ["-- Select --"] + list(categories))
 
@@ -32,6 +33,7 @@ if selected_category != "-- Select --":
             tool_description = data[(data["AI Tool"] == selected_tool)]["A Brief Description"].values[0]
             st.subheader("Tool Description:")
             st.write(tool_description)
+            st.write(data.columns)
 
 st.caption("Data sourced from Google Sheets.")
 
