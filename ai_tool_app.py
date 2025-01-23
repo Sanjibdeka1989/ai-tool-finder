@@ -19,7 +19,7 @@ else:
 
     # Step 1: Select a Category
     categories = data["Categories"].dropna().unique()
-    selected_category = st.selectbox("Select a Category:", ["-- Select --"] + list(categories))
+    selected_category = st.selectbox("Select a Category:", ["-- Select --"] + list(categories)
 
     if selected_category != "-- Select --":
         # Step 2: Select a Sub-Category
@@ -36,5 +36,7 @@ else:
                 description = data[data["AI Tool"] == selected_tool]["A Brief Description"].iloc[0]
                 st.subheader(f"Description of {selected_tool}")
                 st.write(description)
+                st.write(data.columns)
+
 
 
