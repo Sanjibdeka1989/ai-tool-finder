@@ -1,0 +1,37 @@
+import streamlit as st
+import pandas as pd
+
+# Load data from Google Sheets (downloaded as CSV for the app)
+@st.cache_data
+def load_data():
+    url = "https://docs.google.com/spreadsheets/d/19nCJDpcgsz2PPrxGnBBkTp5zCTDpbRlgGhad3cWg6BE/export?format=csv&id=19nCJDpcgsz2PPrxGnBBkTp5zCTDpbRlgGhad3cWg6BE&gid=1047819931"
+    return pd.read_csv(url)
+
+# Load the data
+data = load_data()
+
+# Streamlit app
+st.title("AI Tool Finder")
+
+# Step 1: Select a Category
+categories = data["Categories"].dropna().unique()
+selected_category = st.selectbox("Select a Category:", ["-- Select --"] + list(categories))
+
+if selected_category != "-- Select --":
+    # Step 2: Select a Sub-Category
+    filtered_subcategories = data[data["Categories"] == selected_category]["Sub-Categories"].dropna().unique()
+    selected_subcategory = st.selectbox("Select a Sub-Category:", ["-- Select --"] + list(filtered_subcategories))
+
+    if selected_subcategory != "-- Select --":
+        # Step 3: Select a Tool
+        filtered_tools = data[(data["Categories"] == selected_category) & (data["Sub-Categories"] == selected_subcategory)]["AI Tool"].dropna().unique()
+        selected_tool = st.selectbox("Select a Tool:", ["-- Select --"] + list(filtered_tools))
+
+        if selected_tool != "-- Select --":
+            # Step 4: Show the description
+            tool_description = data[(data["AI Tool"] == selected_tool)]["A Brief Description"].values[0]
+            st.subheader("Tool Description:")
+            st.write(tool_description)
+
+st.caption("Data sourced from Google Sheets.")
+
