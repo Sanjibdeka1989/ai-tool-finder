@@ -4,7 +4,7 @@ import pandas as pd
 # Load data from the local Excel file
 @st.cache_data
 def load_data():
-    file_path = "/C:/Users/Downloads/GitHub/ai-tool-finder/AI-Tool.xlsx"
+    file_path = "C:\Users\sanji\Downloads\GitHub\ai-tool-finder\AI-Tool.xlsx"
     return pd.read_excel(file_path)
 
 # Load the data
